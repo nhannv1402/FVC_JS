@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Situation2</title>
+  </head>
+  <body>
+
+    <script>
+      // get danh sách nhân viên
+      fetch("http://localhost:8080/departments")
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (departments) {
+          departments.forEach((department,id) => {
+            var deptID =  document.createElement("h4");
+            var deptName =  document.createElement("h4");
+            var deptNumStaff =  document.createElement("h4");
+            deptID = department.id;
+            console.log(deptID);
+            console.log(id);
+            
+            
+          });
+        })
+        //báo lỗi api
+        .catch((error) => {
+          alert(error);
+        });
+    </script>
+  </body>
+</html>

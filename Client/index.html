@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Situation 1.1 + 1.2</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Danh Sách Nhân Viên</h1>
+      <div id="content row">
+        <div class="row">
+          <p>Họ và Tên:</p>
+          <input type="text" id="name" />
+        </div>
+        <div class="row">
+          <p>Ngày tháng năm sinh:</p>
+          <input type="text" id="dob" />
+        </div>
+        <div class="row">
+          <p>Hệ số lương:</p>
+          <input type="text" id="SalaryScale" />
+        </div>
+        <div class="row">
+          <p>Ngày bắt đầu làm việc:</p>
+          <input type="text" id="StartDate" />
+        </div>
+        <div class="row">
+          <p>Phòng ban:</p>
+          <input type="text" id="Department" />
+        </div>
+        <div class="row">
+          <p>Nghỉ phép hằng năm:</p>
+          <input type="text" id="AnnualLeave" />
+        </div>
+        <div class="row">
+          <p>Số ngày OT:</p>
+          <input type="text" id="Overtime" />
+        </div>
+        <div>
+          <button id="submitButton">Thêm nhân viên mới</button>
+          <button id="update2Button">Cập nhập thông tin nhân viên</button>
+        </div>
+      </div>
+      <hr />
+      <div id="staffListInfoContainer">
+        <div class="StaffInfoCard2">
+          <div>
+            <img
+              src="https://cdn.pixabay.com/photo/2016/11/14/17/39/person-1824147_640.png"
+              alt=""
+            />
+            <h3>Nguyen Viet Nhan</h3>
+            <button class="btn"></button>
+          </div>
+
+          <div class="staffDetailInfo">
+            <h4>Trưởng ban văn nghệ</h4>
+            <h4>2019-04-30T08:59:00.000Z</h4>
+            <h4>Lương: 6800000$</h4>
+            <h4>Phòng ban: GIF.AFS</h4>
+            <h4>Nghỉ phép hằng năm: 180</h4>
+
+            <div class="detailInfoButton">
+              <button>delete</button>
+              <button>cập nhập</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // get danh sách nhân viên
+      fetch("http://localhost:8080/staffs")
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (staffs) {
+          staffs.forEach((staff, index) => {
+            var staffSalaryScale = document.createElement("h4");
+            staffSalaryScale.innerText = "Hệ số lương:  " + staff.salaryScale;
+            staffSalaryScale.id = staff.id;
+            staffSalaryScale.style = "display: none";
+            var staffAnnualLeave = document.createElement("h4");
+            staffAnnualLeave.innerText =
+              "Nghỉ phép hằng năm:  " + staff.annualLeave;
+            staffAnnualLeave.id = staff.id;
+            staffAnnualLeave.style = "display: none";
+            var staffOverTime = document.createElement("h4");
+            staffOverTime.innerText = "Số ngày OT:  " + staff.overTime;
+            staffOverTime.id = staff.id;
+            staffOverTime.style = "display: none";
+            var staffStartDate = document.createElement("h4");
+            staffStartDate.innerText =
+              "Ngày bắt đầu làm việc: \n" + staff.startDate;
+            staffStartDate.id = staff.id;
+            staffStartDate.style = "display: none";
+            var staffDepartment = document.createElement("h4");
+            staffDepartment.innerText = "Phòng ban:  " + staff.departmentId;
+            staffDepartment.id = staff.id;
+            staffDepartment.style = "display: none";
+
+            var deleteButton = document.createElement("button");
+            deleteButton.innerText = "delete";
+            deleteButton.id = staff.id;
+            var updateButton = document.createElement("button");
+            updateButton.innerText = "cập nhập";
+            updateButton.id = staff.id;
+            var divButton = document.createElement("div");
+            divButton.className = "detailInfoButton";
+            divButton.appendChild(deleteButton);
+            divButton.appendChild(updateButton);
+            divButton.style = "display: none;";
+
+            // deleteButton.onclick = function () {
+            //   alarm(DeleteButton.id);
+            // };
+
+            deleteButton.onclick = function () {
+              // console.log(deleteButton.id);
+              // DELETE xóa một nhân viên
+              // fetch("http://localhost:8080/staffs/" + deleteButton.id, {
+                fetch(`http://localhost:8080/staffs/${deleteButton.id}`, {
+
+                method: "DELETE",
+              }).then((response) => {
+                console.log(response);
+              });
+              location.reload();
+            };
+
+            updateButton.onclick = function () {
+              //kéo lên đầu trang
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth", // Tạo hiệu ứng cuộn mượt
+              });
+
+              //đẩy thông tin lên form
+              var StaffName = document.getElementById("name");
+              StaffName.value = staff.name;
+              var StaffDOB = document.getElementById("dob");
+              StaffDOB.value = staff.doB;
+              var StaffSalaryScale = document.getElementById("SalaryScale");
+              StaffSalaryScale.value = staff.salaryScale;
+              var StaffStartDay = document.getElementById("StartDate");
+              StaffStartDay.value = staff.startDate;
+              var StaffDepartment = document.getElementById("Department");
+              StaffDepartment.value = staff.departmentId;
+              var StaffAnnualLeave = document.getElementById("AnnualLeave");
+              StaffAnnualLeave.value = staff.annualLeave;
+              var StaffOverTime = document.getElementById("Overtime");
+              StaffOverTime.value = staff.overTime;
+              // console.log(staff.id);
+
+              document.getElementById("update2Button").onclick = function () {
+                // PATCH cập nhật thông tin nhân viên
+                fetch("http://localhost:8080/staffs", {
+                  method: "PATCH", // bắt buộc viết hoa chữ PATCH
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    id: staff.id,
+                    name: StaffName.value,
+                    doB: StaffDOB.value,
+                    salaryScale: StaffSalaryScale.value,
+                    startDate: StaffStartDay.value,
+                    departmentId: StaffDepartment.value,
+                    annualLeave: StaffAnnualLeave.value,
+                    overTime: StaffOverTime.value,
+                    image:
+                      "https://cdn.pixabay.com/photo/2016/11/14/17/39/person-1824147_640.png",
+                    salary: "100000000",
+                  }),
+                }).then((response) => {
+                  console.log(response);
+                  location.reload();
+                });
+              };
+
+            };
+
+            var StaffDetailInfomation = document.createElement("div");
+            StaffDetailInfomation.className = "staffDetailInfo";
+            StaffDetailInfomation.appendChild(staffSalaryScale);
+            StaffDetailInfomation.appendChild(staffAnnualLeave);
+            StaffDetailInfomation.appendChild(staffOverTime);
+            StaffDetailInfomation.appendChild(staffStartDate);
+            StaffDetailInfomation.appendChild(staffDepartment);
+            StaffDetailInfomation.appendChild(divButton);
+            //tạo mới element ảnh nv, truyển dữ liệu
+            var staffPicture = document.createElement("img");
+            staffPicture.src = staff.image;
+            //tên nhân viên
+            var staffName = document.createElement("h3");
+            staffName.innerText = staff.name;
+            //nút bấm
+            var invisiableButton = document.createElement("button");
+            invisiableButton.className = "btn";
+            //tạo mới thẻ nv, nối các phần tử con vào
+            var basicInfo = document.createElement("div");
+            basicInfo.appendChild(staffPicture);
+            basicInfo.appendChild(staffName);
+            basicInfo.appendChild(invisiableButton);
+            var card = document.createElement("div");
+            card.className = "StaffInfoCard";
+            card.appendChild(basicInfo);
+            // card.appendChild(staffName);
+            // card.appendChild(invisiableButton);
+            // card.appendChild(staffSalaryScale);
+            // card.appendChild(staffStartDate);
+            // card.appendChild(staffDepartment);
+            // card.appendChild(staffAnnualLeave);
+            // card.appendChild(staffOverTime);
+            card.appendChild(StaffDetailInfomation);
+
+            //
+            card.id = 0;
+            // card.createElement("")
+            document.getElementById("staffListInfoContainer").appendChild(card);
+
+            //lỗi xảy ra vì fetch là một callback, invisiableButton không tồn tại ngoài fetch. beside, vì .onclick là thuộc tính, nên k bị lặp trong forEach
+            //vì em muốn thêm 1 thuộc tính là status thể hiện sự đóng mở của card, nhưng card 0 có createAtribure, nên dùng id thay thế
+            invisiableButton.onclick = function () {
+              alert("id là " + card.id);
+              if (card.id == 0) {
+                card.className = "StaffInfoCard2";
+                staffSalaryScale.style = "display: block";
+                staffAnnualLeave.style = "display: block";
+                staffOverTime.style = "display: block";
+                staffStartDate.style = "display: block";
+                staffDepartment.style = "display: block";
+                divButton.style = "display: flex";
+              } else {
+                card.className = "StaffInfoCard";
+                staffSalaryScale.style = "display: none";
+                staffAnnualLeave.style = "display: none";
+                staffOverTime.style = "display: none";
+                staffStartDate.style = "display: none";
+                staffDepartment.style = "display: none";
+                divButton.style = "display: none";
+              }
+              if (card.id == 0) {
+                card.id = 1;
+              } else {
+                card.id = 0;
+              }
+            };
+
+            index = index + 1;
+          });
+        })
+        //báo lỗi api
+        .catch((error) => {
+          alert(error);
+        });
+
+      //   var button = $(".btn").click(function () {
+      //   console.log("đã bấm được r");
+      // });
+
+      var SubmitButton = (document.getElementById("submitButton").onclick =
+        function () {
+          var newStaffName = document.getElementById("name").value;
+          var newStaffDOB = document.getElementById("dob").value;
+          var newStaffSalaryScale =
+            document.getElementById("SalaryScale").value;
+          var newStaffStartDay = document.getElementById("StartDate").value;
+          var newStaffDepartment = document.getElementById("Department").value;
+          var newStaffAnnualLeave =
+            document.getElementById("AnnualLeave").value;
+          var newStaffOverTime = document.getElementById("Overtime").value;
+
+          // Post thêm nhân viên mới
+          fetch("http://localhost:8080/staffs", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: newStaffName,
+              doB: newStaffDOB,
+              salaryScale: newStaffSalaryScale,
+              startDate: newStaffStartDay,
+              departmentId: newStaffDepartment,
+              annualLeave: newStaffAnnualLeave,
+              overTime: newStaffOverTime,
+              image:
+                "https://cdn.pixabay.com/photo/2016/11/14/17/39/person-1824147_640.png",
+            }),
+          })
+            .then((response) => {
+              console.log(response);
+            })
+            .then(location.reload());
+        });
+
+    </script>
+  </body>
+</html>
