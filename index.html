@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <p>Họ và Tên: </p> <input type="text" id="name">
+        </div>
+        <div class="row">
+            <p>DOB: </p> <input type="text" id="dob">
+        </div>
+        <div class="row">
+            <p>Maths Scores: </p> <input type="text" id="mathScores">
+        </div>
+        <div class="row">
+            <p>Physical Scores: </p> <input type="text" id="physicalScores">
+        </div>
+        <div class="row">
+            <p>Chemical Scores: </p> <input type="text" id="chemicalScores">
+        </div>
+
+        <button id="addButton"> Nhập</button>
+        <button id="calculateAverageButton">Tính điểm trung bình</button>
+        <button id="checkTypeButton">Xác định học lực</button>
+
+        <!-- cấu trúc bảng:       table
+        cấu trúc bảng:    thead tbody
+        cấu trúc bảng:  tr(table row) th(table head cell) td(table data cell) -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Họ và tên</th>
+                    <th>Ngày tháng năm sinh</th>
+                    <th>Điểm toán</th>
+                    <th>Điểm lý</th>
+                    <th>Điểm hoá</th>
+                    <th>Điểm trung bình</th>
+                    <th>Học lực</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <tr>
+                    <td> Nguyễn Nhân</td>
+                    <td>14/02/2004</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>Xuất sắc</td>
+                </tr>
+            </tbody>
+        </table>    
+    </div>
+
+    <script>
+        var tbody = document.getElementById("tbody");
+        var index = 1;
+        
+        document.getElementById("checkTypeButton").onclick = checkType;
+        document.getElementById("calculateAverageButton").onclick = calculateAverage;
+        document.getElementById("addButton").onclick = add;
+        function add() {
+            var newRow = document.createElement("tr");
+            var tdName = document.createElement("td");
+            var tdNS = document.createElement("td");
+            var tdDToan = document.createElement("td");
+            var tdDLy = document.createElement("td");
+            var tdDHoa = document.createElement("td");
+            var tdDTB = document.createElement("td");
+            var tdHL = document.createElement("td");
+            newRow.id = index;
+            // tdDToan.id = "tdDToan";
+            // tdDLy.id = "tdDLy";
+            // tdDHoa.id = "tdDHoa";
+            // console.log(tdDToan);
+            // console.log(tdDToan);
+            
+            
+            
+
+            tdName.innerHTML = document.getElementById("name").value;
+            tdNS.innerHTML = document.getElementById("dob").value;
+            tdDToan.innerHTML = document.getElementById("mathScores").value;
+            tdDLy.innerHTML = document.getElementById("physicalScores").value;
+            tdDHoa.innerHTML = document.getElementById("chemicalScores").value;
+            newRow.append(tdName, tdNS, tdDToan, tdDLy, tdDHoa, tdDTB, tdHL);
+            tbody.append(newRow);
+            document.getElementById("name").value = "";
+            document.getElementById("dob").value = "";
+            document.getElementById("mathScores").value = "";
+            document.getElementById("physicalScores").value = "";
+            document.getElementById("chemicalScores").value = "";
+            index = index + 1;
+        }
+        function calculateAverage() {
+            for (let i = 1; i < index; i++) {
+                let row = document.getElementById(i);
+                let tds = row.getElementsByTagName("td");
+                let average = (tds[2].innerText - (- tds[3].innerText) - (- tds[4].innerText))/3;
+                tds[5].innerText = average; 
+                
+            }
+
+        }
+
+        function checkType() {
+            for (let i = 1; i < index; i++) {
+                let row = document.getElementById(i);
+                let tds = row.getElementsByTagName("td");
+                let average = (tds[2].innerText - (- tds[3].innerText) - (- tds[4].innerText))/3;
+                if(average >= 8) {
+                    tds[6].innerText = "Giỏi";
+                } else if(average >= 6.5) {
+                    tds[6].innerText = "Khá";
+                }else {
+                    tds[6].innerText = "Trung bình";
+                }
+            }
+        }
+        
+        
+        
+    </script>
+
+</body>
+</html>
