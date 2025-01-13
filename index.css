@@ -1,0 +1,27 @@
+.container{
+    width: 100vw;
+    height: 100vh;
+}
+.row{
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.row input{
+    width: 200px;
+    height: 20px;
+    margin-left: 15px;
+}
+
+button{
+    margin-right: 10px;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+table, th, td{
+    border: 1px solid;
+}
+th{
+    padding: 0 3vw 0 3vw;
+}

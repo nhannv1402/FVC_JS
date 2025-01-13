@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <button id="btn1">btn1</button>
+        <button id="btn2">btn2</button>
+        <button id="btn3">btn3</button>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        const button = $("#btn1"); //select phần tử có id btn1, trả về object jquery(không khác gì nhau, chỉ là object jquery có nhiều phương thức hơn)
+        const button2 = document.querySelector("#btn2"); //select phần tử button của class abc (trả về phần tử dom), lệnh ở dưới cũng trả về phần tử dom
+        // const button = document.getElementById("btn1");
+        button.onclick = function () {
+            console.log("cái này là thuộc tính của button --> ghi đè");
+        }
+        button.onclick = function () {
+            console.log("cái này là thuộc tính của button --> ghi đè");
+        }
+        function abc() {
+            console.log("đây là phương thức abc");
+            
+        }
+        function abc2() {
+            console.log("đây là phương thức abc2");
+            
+        }
+
+        button2.addEventListener("click",abc);
+        button2.addEventListener("click",abc);
+        button2.addEventListener("click",abc);
+        button2.addEventListener("click",abc);
+        //vì sao nhập 4 lần mà chỉ console ra 1 dòng (sự khác biệt của eventListener với onclick)
+        //đối với phần tử dom thì có thể dùng addEventListener, object jquery thì không 
+        button.click(abc);
+        button.on("click", abc2);
+        button.on("click", abc2);
+        button.off("click", abc2);
+        //button off lần 2 thằng luôn, giống như thuộc tính rứa
+
+        //phần tử dom có 2 cách gọi: gọi bằng thuộc tính onclick hoặc là hàm EventListener
+        //object jquery có 2 cách gọi button.click(abc) hoặc là button.on("click", abc); button.off("click",abc) *một khi off thì sẽ tắt hết các on trc đó
+
+        //các cú pháp jquery thông dụng: https://webcoban.vn/jquery/cu-phap-cua-jquery.html
+        
+
+        // let table = document.createElement("table");
+        let table = $("<table>"); //kí tự $ là truy cập 1 phần tử html, <> là tạo mới
+        console.log(table);
+
+        // table.className = "table"; 
+        table.addClass("table mt-5");
+        table.removeClass("mt-5");
+
+        table.text("Nooo");
+        $("body").append(table);
+
+        let objectJquery = $("<button>");
+        objectJquery[0].onclick = function () {
+            console.log("đây là cách chuyển một object jquery thành 1 phần tử dom");
+            
+        }
+        //object jquery là một mảng và phần tử đầu tiên của mảng là phần tử dom cần dùng
+
+        let domElement = document.getElementById("btn3");
+        $(domElement).click(function () {
+            console.log("đây là phần tử element được chuyển sang đối tượng jquery để dùng click");
+            
+        })
+    </script>
+    
+</body>
+</html>

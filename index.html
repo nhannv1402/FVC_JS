@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <p>Họ và Tên: </p> <input type="text" id="name">
+        </div>
+        <div class="row">
+            <p>DOB: </p> <input type="text" id="dob">
+        </div>
+        <div class="row">
+            <p>Maths Scores: </p> <input type="text" id="mathScores">
+        </div>
+        <div class="row">
+            <p>Physical Scores: </p> <input type="text" id="physicalScores">
+        </div>
+        <div class="row">
+            <p>Chemical Scores: </p> <input type="text" id="chemicalScores">
+        </div>
+
+        <button id="addButton"> Nhập</button>
+        <button id="calculateAverageButton">Tính điểm trung bình</button>
+        <button id="checkTypeButton">Xác định học lực</button>
+
+        <!-- cấu trúc bảng:       table
+        cấu trúc bảng:    thead tbody
+        cấu trúc bảng:  tr(table row) th(table head cell) td(table data cell) -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Họ và tên</th>
+                    <th>Ngày tháng năm sinh</th>
+                    <th>Điểm toán</th>
+                    <th>Điểm lý</th>
+                    <th>Điểm hoá</th>
+                    <th>Điểm trung bình</th>
+                    <th>Học lực</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <tr>
+                    <td> Nguyễn Nhân</td>
+                    <td>14/02/2004</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>10</td>
+                    <td>Xuất sắc</td>
+                </tr>
+            </tbody>
+        </table>    
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        var index = 1;
+        $("#addButton").click(() => {
+            let hoVaTen = $("#name").val();
+            let DOB = $("#dob").val();
+            let diemToan = $("#mathScores").val();
+            let diemLy = $("#physicalScores").val();
+            let diemHoa = $("#chemicalScores").val();
+            // console.log(diemHoa);
+            let newRow = $("<tr>");
+            newRow.attr('id', index);
+            let tdName = $("<td>");
+            let tdDob  = $("<td>");
+            let tdMath = $("<td>");
+            let tdPhysical = $("<td>");
+            let tdChemical = $("<td>");
+            let tdAverage = $("<td>");
+            let tdType = $("<td>");
+            
+            tdName.text(hoVaTen);
+            tdDob.text(DOB);
+            tdMath.text(diemToan);
+            tdPhysical.text(diemLy);
+            tdChemical.text(diemHoa);
+            // console.log(tdName + tdDob + tdMath + tdPhysical + tdChemical);
+            newRow.append(tdName, tdDob, tdMath, tdPhysical, tdChemical, tdAverage, tdType);
+            $("#tbody").append(newRow);
+            
+            $("#name").val("");
+            $("#dob").val("");
+            $("#mathScores").val("");
+            $("#physicalScores").val("");
+            $("#chemicalScores").val("");
+            index = index + 1;
+        })
+
+        $("#calculateAverageButton").click(() => {
+            for (let i = 1; i < index; i++) {
+                let avr = (parseInt($(`#${i} td:nth-child(3)`).text().trim(), 10)+parseInt($(`#${i} td:nth-child(4)`).text().trim(), 10)+parseInt($(`#${i} td:nth-child(5)`).text().trim(), 10))/3;
+                $(`#${i} td:nth-child(6)`).text(avr);
+                
+            }
+        })
+
+        $("#checkTypeButton").click(() => {
+            for (let i = 1; i < index; i++) {
+                let avr = (parseInt($(`#${i} td:nth-child(3)`).text().trim(), 10)+parseInt($(`#${i} td:nth-child(4)`).text().trim(), 10)+parseInt($(`#${i} td:nth-child(5)`).text().trim(), 10))/3;
+                if(avr >= 8) {
+                    $(`#${i} td:nth-child(7)`).text("Giỏi");
+                } else if(avr >= 6.5) {
+                    $(`#${i} td:nth-child(7)`).text("Khá");
+                }else {
+                    $(`#${i} td:nth-child(7)`).text("Trung bình");
+                }
+               
+            }
+        })
+    </script>
+
+</body>
+</html>
