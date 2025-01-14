@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Chào mừng bạn đến với ứng dụng JavaScript đầu tiên</h1>
+    <div id="content">
+        <h4 id="name">Họ và tên: none</h4>
+        <h4 id="city">Thành Phố: none</h4>
+        <h4 id="phoneNum">Số điện thoại: </h4>
+        <h4 id="yob">Năm sinh: </h4>
+    </div>
+    <button id="showHiddenButton">Hide</button>
+
+    <script>
+        // console.log(new Date().getFullYear());
+
+        alert("Chào mừng bạn đến với ứng dụng JavaScript đầu tiên")
+        var userName = prompt("Hãy nhập họ và tên của bạn: ");
+        document.getElementById("name").innerHTML = "Tên: " + userName;
+        var userCity = prompt("Hãy nhập thành phố của bạn: ");
+        document.getElementById("city").innerHTML = "Thành Phố: " + userCity;
+        var userPhoneNum = prompt("Hãy nhập số điện thoại của bạn: ");
+        document.getElementById("phoneNum").innerHTML = "Số điện thoại: " + userPhoneNum;
+        var useryob = prompt("Hãy nhập năm sinh của bạn: ");
+        document.getElementById("yob").innerHTML = "Năm sinh: " + useryob;
+        while(useryob > new Date().getFullYear()) {
+            useryob = prompt("Nhập sai. Hãy nhập lại năm sinh của bạn: ");
+            document.getElementById("yob").innerHTML = "Năm sinh: " + useryob;
+        }
+        var status = 1;
+        document.getElementById("showHiddenButton").onclick = ShowHidden;
+        function ShowHidden() {
+            if(status == 1){
+                document.getElementById("content").style = "display:none"
+                status = 0;
+                document.getElementById("showHiddenButton").innerHTML = "Show";
+            } else {
+                document.getElementById("content").style = ""
+                status = 1;
+                document.getElementById("showHiddenButton").innerHTML = "Hide";
+            }
+        }
+    </script>
+</body>
+</html>
